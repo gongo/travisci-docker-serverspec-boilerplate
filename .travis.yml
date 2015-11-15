@@ -1,0 +1,20 @@
+sudo: required
+
+language: ruby
+
+branches:
+  only:
+    - master
+
+services:
+  - docker
+
+env:
+  - TARGET_CONTAINER_ID=container-php-emacs
+
+before_script:
+  - docker build -t php-emacs .
+  - docker run -d --name $TARGET_CONTAINER_ID php-emacs
+
+script:
+  - bundle exec rspec
